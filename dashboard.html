@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Under25 Fellow Portal</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div>
+
+        <h1 id="welcome">Welcome</h1>
+
+        <p id="college"></p>
+
+    </div>
+
+    <button id="logoutBtn">Logout</button>
+
+</header>
+
+<section class="toolbar">
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search by Name, Number or Course">
+
+    <div class="stats">
+
+        <span id="count">0 Applications</span>
+
+        <button id="downloadCSV">
+
+            Download CSV
+
+        </button>
+
+    </div>
+
+</section>
+
+<main id="cards">
+
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/csv.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

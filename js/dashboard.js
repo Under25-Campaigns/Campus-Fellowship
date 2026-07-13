@@ -1,18 +1,3 @@
-window.onload = async () => {
-
-    console.log("Dashboard loaded");
-
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
-
-    const result = await api({
-        action: "applications",
-        token
-    });
-
-    console.log("API Result:", result);
-
-    // Rest of your code...
 let applications = [];
 
 window.onload = async () => {
@@ -26,8 +11,10 @@ window.onload = async () => {
 
     const result = await api({
         action: "applications",
-        token
+        token: token
     });
+
+    console.log(result);
 
     if (!result.success) {
         alert("Session expired.");
@@ -51,72 +38,64 @@ window.onload = async () => {
 
 };
 
-function renderCards(list){
+function renderCards(list) {
 
-    const container=document.getElementById("cards");
+    const container = document.getElementById("cards");
 
-    container.innerHTML="";
+    container.innerHTML = "";
 
-    list.forEach(app=>{
+    list.forEach(app => {
 
-        const card=document.createElement("div");
+        const card = document.createElement("div");
 
-        card.className="card";
+        card.className = "card";
 
-        card.innerHTML=`
+        card.innerHTML = `
+            <div class="summary">
 
-<div class="summary">
+                <h2>${app.fullName}</h2>
 
-<h2>${app.fullName}</h2>
+                <p>${app.course} • Year ${app.year}</p>
 
-<p>${app.course} • Year ${app.year}</p>
+                <p>${app.contactNumber}</p>
 
-<p>${app.contactNumber}</p>
+                <div class="tags">
+                    <span>${app.preference1}</span>
+                    <span>${app.preference2}</span>
+                </div>
 
-<div class="tags">
+            </div>
 
-<span>${app.preference1}</span>
+            <div class="details">
 
-<span>${app.preference2}</span>
+                <h4>Club Experience</h4>
+                <p>${app.clubExperience || ""}</p>
 
-</div>
+                <h4>Superpower</h4>
+                <p>${app.superpower || ""}</p>
 
-</div>
+                <h4>Event Idea</h4>
+                <p>${app.eventIdea || ""}</p>
 
-<div class="details">
+                <h4>New Student</h4>
+                <p>${app.newStudent || ""}</p>
 
-<h4>Club Experience</h4>
-<p>${app.clubExperience}</p>
+                <h4>Belief</h4>
+                <p>${app.belief || ""}</p>
 
-<h4>Superpower</h4>
-<p>${app.superpower}</p>
+                <h4>Joke</h4>
+                <p>${app.joke || ""}</p>
 
-<h4>Event Idea</h4>
-<p>${app.eventIdea}</p>
+                <h4>Portfolio</h4>
+                <a href="${app.portfolio}" target="_blank">
+                    Open Portfolio
+                </a>
 
-<h4>New Student</h4>
-<p>${app.newStudent}</p>
+            </div>
+        `;
 
-<h4>Belief</h4>
-<p>${app.belief}</p>
-
-<h4>Joke</h4>
-<p>${app.joke}</p>
-
-<h4>Portfolio</h4>
-
-<a target="_blank" href="${app.portfolio}">
-Open Portfolio
-</a>
-
-</div>
-
-`;
-
-        card.onclick=()=>{
-
+        card.onclick = () => {
             card.classList.toggle("open");
-
         };
 
         container.appendChild(card);

@@ -35,8 +35,35 @@ window.onload = async () => {
     applications = result.applications;
 
     renderCards(applications);
+    document.getElementById("search").addEventListener("input", searchApplications);
 
 };
+function searchApplications() {
+
+    const query = document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (query === "") {
+        renderCards(applications);
+        return;
+    }
+
+    const filtered = applications.filter(app => {
+
+        return (
+            (app.fullName || "").toLowerCase().includes(query) ||
+            (app.contactNumber || "").toLowerCase().includes(query) ||
+            (app.course || "").toLowerCase().includes(query)
+        );
+
+    });
+
+    renderCards(filtered);
+
+}
 
 function renderCards(list) {
 

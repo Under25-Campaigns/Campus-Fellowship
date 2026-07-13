@@ -201,3 +201,26 @@ display:inline-block;
 margin-top:10px;
 
 }
+
+.contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:8px;
+}
+
+.whatsapp-btn{
+    background:#25D366;
+    color:white;
+    padding:6px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.whatsapp-btn:hover{
+    transform:translateY(-1px);
+    opacity:.9;
+}

@@ -56,11 +56,16 @@ function searchApplications() {
         return (
             (app.fullName || "").toLowerCase().includes(query) ||
             (app.contactNumber || "").toLowerCase().includes(query) ||
-            (app.course || "").toLowerCase().includes(query)
+            (app.course || "").toLowerCase().includes(query) ||
+            (app.preference1 || "").toLowerCase().includes(query) ||
+            (app.preference2 || "").toLowerCase().includes(query)
         );
 
     });
 
+    renderCards(filtered);
+
+}
     renderCards(filtered);
 
 }

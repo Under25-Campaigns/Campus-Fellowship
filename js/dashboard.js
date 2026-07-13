@@ -101,5 +101,23 @@ function renderCards(list) {
         container.appendChild(card);
 
     });
-
 }
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    const token = localStorage.getItem("token");
+
+    try {
+        await api({
+            action: "logout",
+            token: token
+        });
+    } catch (e) {
+        // Ignore API errors on logout
+    }
+
+    localStorage.clear();
+
+    window.location.href = "index.html";
+
+});

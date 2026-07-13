@@ -66,9 +66,6 @@ function searchApplications() {
     renderCards(filtered);
 
 }
-    renderCards(filtered);
-
-}
 
 function renderCards(list) {
 

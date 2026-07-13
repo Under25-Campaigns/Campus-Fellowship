@@ -85,11 +85,9 @@ function renderCards(list) {
 
                 <h4>Joke</h4>
                 <p>${app.joke || ""}</p>
-
                 <h4>Portfolio</h4>
-                <a href="${app.portfolio}" target="_blank">
-                    Open Portfolio
-                </a>
+
+<p>${formatPortfolio(app.portfolio)}</p>
 
             </div>
         `;
@@ -101,6 +99,33 @@ function renderCards(list) {
         container.appendChild(card);
 
     });
+}
+function formatPortfolio(value) {
+
+    if (!value || value.trim() === "" || value === "None") {
+        return "—";
+    }
+
+    let url = value.trim();
+
+    // If it looks like a website but has no protocol
+    if (
+        url.match(/^(www\.|instagram\.com|linkedin\.com|github\.com)/i)
+    ) {
+        url = "https://" + url;
+    }
+
+    // If it's a proper URL
+    if (/^https?:\/\//i.test(url)) {
+
+        return `<a href="${url}" target="_blank">${value}</a>`;
+
+    }
+
+    // Otherwise just show plain text
+
+    return value;
+
 }
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {

@@ -1,16 +1,23 @@
-const API_URL =
-"https://script.google.com/macros/s/AKfycbzmVlKTYZGo3WPJIfQOeW89ZaO5Ps6an7y8U5BXAtbCtltk6iqWT_-zp2szIt1L8zP3/exec";
+const API_URL = "https://script.google.com/macros/library/d/1_g1J_UpWavCvFaTFehZnj5m-8HctWiZbqFZwasqW3thYiIYUcqw7WKdK/2";
 
-async function api(data){
+async function api(data) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    });
 
-const response=await fetch(API_URL,{
+    const result = await response.json();
 
-method:"POST",
+    return result;
 
-body:JSON.stringify(data)
-
-});
-
-return await response.json();
-
+  } catch (err) {
+    return {
+      success: false,
+      message: "Unable to connect to the server."
+    };
+  }
 }

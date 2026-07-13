@@ -74,6 +74,7 @@ function searchApplications() {
 
 }
 
+
 function renderCards(list) {
 
     const container = document.getElementById("cards");
@@ -133,7 +134,9 @@ function renderCards(list) {
                 <p>${app.joke || ""}</p>
                 <h4>Portfolio</h4>
 
-<p>${formatPortfolio(app.portfolio)}</p>
+<div class="portfolio">
+    ${formatPortfolio(app.portfolio)}
+</div>
 
             </div>
         `;
@@ -152,25 +155,26 @@ function formatPortfolio(value) {
         return "—";
     }
 
-    let url = value.trim();
+    const text = value.trim();
 
-    // If it looks like a website but has no protocol
-    if (
-        url.match(/^(www\.|instagram\.com|linkedin\.com|github\.com)/i)
-    ) {
+    // Find the first URL-like string
+    const match = text.match(/((https?:\/\/|www\.|instagram\.com|linkedin\.com|github\.com)\S*)/i);
+
+    // No URL found
+    if (!match) {
+        return text;
+    }
+
+    let url = match[0];
+
+    if (!url.startsWith("http")) {
         url = "https://" + url;
     }
 
-    // If it's a proper URL
-    if (/^https?:\/\//i.test(url)) {
+    const linkedPart = `<a href="${url}" target="_blank">${match[0]}</a>`;
 
-        return `<a href="${url}" target="_blank">${value}</a>`;
-
-    }
-
-    // Otherwise just show plain text
-
-    return value;
+    // Replace only the URL with the hyperlink
+    return text.replace(match[0], linkedPart);
 
 }
 

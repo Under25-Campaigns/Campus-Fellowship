@@ -53,16 +53,23 @@ function searchApplications() {
 
     const filtered = applications.filter(app => {
 
-        return (
-            (app.fullName || "").toLowerCase().includes(query) ||
-            (app.contactNumber || "").toLowerCase().includes(query) ||
-            (app.course || "").toLowerCase().includes(query) ||
-            (app.preference1 || "").toLowerCase().includes(query) ||
-            (app.preference2 || "").toLowerCase().includes(query)
-        );
+    const searchable = [
+        app.fullName,
+        app.contactNumber,
+        app.course,
+        app.preference1,
+        app.preference2
+    ]
+    .filter(Boolean)
+    .join(" ")
+    .replace(/[^\p{L}\p{N}\s]/gu, "")
+    .toLowerCase();
 
-    });
+    return searchable.includes(
+        query.replace(/[^\p{L}\p{N}\s]/gu, "")
+    );
 
+});
     renderCards(filtered);
 
 }

@@ -1,43 +1,30 @@
-document
-.getElementById("loginBtn")
-.onclick=async()=>{
+document.getElementById("loginBtn").addEventListener("click", async () => {
 
-const username=
-document.getElementById("username").value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-const password=
-document.getElementById("password").value;
+    const error = document.getElementById("error");
+    error.textContent = "";
 
-const result=
-await api({
+    if (!username || !password) {
+        error.textContent = "Please enter your username and password.";
+        return;
+    }
 
-action:"login",
+    const result = await api({
+        action: "login",
+        username,
+        password
+    });
 
-username,
+    if (!result.success) {
+        error.textContent = result.message || "Login failed.";
+        return;
+    }
 
-password
+    localStorage.setItem("token", result.token);
+    localStorage.setItem("user", JSON.stringify(result.user));
+
+    window.location.href = "dashboard.html";
 
 });
-
-if(result.success){
-
-localStorage.setItem(
-
-"token",
-
-result.token
-
-);
-
-window.location="dashboard.html";
-
-}
-
-else{
-
-document.getElementById("error").innerText=
-result.message;
-
-}
-
-};

@@ -1,3 +1,18 @@
+window.onload = async () => {
+
+    console.log("Dashboard loaded");
+
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
+
+    const result = await api({
+        action: "applications",
+        token
+    });
+
+    console.log("API Result:", result);
+
+    // Rest of your code...
 let applications = [];
 
 window.onload = async () => {

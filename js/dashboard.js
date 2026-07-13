@@ -93,7 +93,17 @@ function renderCards(list) {
 
                 <p>${app.course} • Year ${app.year}</p>
 
-                <p>${app.contactNumber}</p>
+                <div class="contact-row">
+    <span>${app.contactNumber}</span>
+
+    <a
+        class="whatsapp-btn"
+        href="https://wa.me/91${String(app.contactNumber).replace(/\D/g,'')}"
+        target="_blank"
+    >
+        💬 WhatsApp
+    </a>
+</div>
 
                 <div class="tags">
                     <span>${app.preference1}</span>

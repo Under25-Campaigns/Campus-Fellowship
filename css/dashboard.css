@@ -275,7 +275,7 @@ margin-top:10px;
 #loader{
     position:fixed;
     inset:0;
-    background:white;
+    background:#121816; 
 
     display:flex;
     flex-direction:column;

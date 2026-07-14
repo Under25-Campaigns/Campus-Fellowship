@@ -1,3 +1,8 @@
+let bookmarks=
+JSON.parse(
+localStorage.getItem("bookmarks")
+||"[]"
+);
 let applications = [];
 
 window.onload = async () => {

@@ -89,6 +89,8 @@ function renderCards(list) {
     container.innerHTML = "";
 
     list.forEach(app => {
+        const bookmarkId = `${app.fullName}|${app.contactNumber}`;
+const isBookmarked = bookmarks.includes(bookmarkId);
 
         const card = document.createElement("div");
 
@@ -97,7 +99,17 @@ function renderCards(list) {
         card.innerHTML = `
             <div class="summary">
 
-                <h2>${app.fullName}</h2>
+               <div class="card-header">
+
+    <h2>${app.fullName}</h2>
+
+    <span class="bookmark">
+
+        ${isBookmarked ? "⭐" : "☆"}
+
+    </span>
+
+</div>
 
                 <p>${app.course} • Year ${app.year}</p>
 
@@ -150,24 +162,77 @@ src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg">
             </div>
         `;
 
-       card.onclick=()=>{
+const star = card.querySelector(".bookmark");
 
-document
-.querySelectorAll(".card.open")
-.forEach(c=>{
+star.onclick = (e) => {
 
-if(c!==card){
+    e.stopPropagation();
 
-c.classList.remove("open");
+    if (bookmarks.includes(bookmarkId)) {
 
-}
+        bookmarks = bookmarks.filter(id => id !== bookmarkId);
 
-});
+    } else {
 
-card.classList.toggle("open");
+        bookmarks.push(bookmarkId);
+
+    }
+
+    localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+    );
+
+    star.textContent =
+        bookmarks.includes(bookmarkId)
+            ? "⭐"
+            : "☆";
 
 };
 
+const star = card.querySelector(".bookmark");
+
+star.onclick = (e) => {
+
+    e.stopPropagation();
+
+    if (bookmarks.includes(bookmarkId)) {
+
+        bookmarks = bookmarks.filter(id => id !== bookmarkId);
+
+    } else {
+
+        bookmarks.push(bookmarkId);
+
+    }
+
+    localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+    );
+
+    star.textContent =
+        bookmarks.includes(bookmarkId)
+            ? "⭐"
+            : "☆";
+
+};
+
+card.onclick = () => {
+
+    document
+        .querySelectorAll(".card.open")
+        .forEach(c => {
+
+            if (c !== card) {
+                c.classList.remove("open");
+            }
+
+        });
+
+    card.classList.toggle("open");
+
+};
         container.appendChild(card);
 
     });

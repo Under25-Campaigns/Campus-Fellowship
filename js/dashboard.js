@@ -35,6 +35,8 @@ window.onload = async () => {
     applications = result.applications;
 
     renderCards(applications);
+    document.getElementById("loader").style.display="none";
+document.getElementById("app").style.display="block";
     document.getElementById("search").addEventListener("input", searchApplications);
 
 };

@@ -190,34 +190,6 @@ star.onclick = (e) => {
 
 };
 
-const star = card.querySelector(".bookmark");
-
-star.onclick = (e) => {
-
-    e.stopPropagation();
-
-    if (bookmarks.includes(bookmarkId)) {
-
-        bookmarks = bookmarks.filter(id => id !== bookmarkId);
-
-    } else {
-
-        bookmarks.push(bookmarkId);
-
-    }
-
-    localStorage.setItem(
-        "bookmarks",
-        JSON.stringify(bookmarks)
-    );
-
-    star.textContent =
-        bookmarks.includes(bookmarkId)
-            ? "⭐"
-            : "☆";
-
-};
-
 card.onclick = () => {
 
     document

@@ -203,23 +203,30 @@ margin-top:10px;
 }
 
 .contact-row{
+
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    margin-top:8px;
+    gap:10px;
+
+    margin-top:10px;
+
 }
 
 .whatsapp-btn{
-    background:#25D366;
-    color:white;
-    padding:6px 12px;
-    border-radius:8px;
-    text-decoration:none;
-    font-size:13px;
-    font-weight:600;
-    transition:.2s;
-}
 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+    background:#25D366;
+
+    text-decoration:none;
+
+}
 .whatsapp-btn:hover{
     transform:translateY(-1px);
     opacity:.9;

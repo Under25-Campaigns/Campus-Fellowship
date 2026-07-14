@@ -282,3 +282,26 @@ padding:0;
 font-size:22px;
 
 }
+
+.card-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.bookmark{
+
+    font-size:24px;
+    cursor:pointer;
+    user-select:none;
+    transition:.2s;
+
+}
+
+.bookmark:hover{
+
+    transform:scale(1.2);
+
+}

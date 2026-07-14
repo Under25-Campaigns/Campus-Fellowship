@@ -223,9 +223,10 @@ margin-top:10px;
     width:32px;
     height:32px;
 
-    background:#25D366;
-
-    border-radius:50%;
+    background:transparent;
+    border:none;
+    border-radius:0;
+    padding:0;
 
     text-decoration:none;
 

@@ -104,7 +104,9 @@ function renderCards(list) {
         href="https://wa.me/91${String(app.contactNumber).replace(/\D/g,'')}"
         target="_blank"
     >
-        💬 WhatsApp
+        <img
+class="wa-icon"
+src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg">
     </a>
 </div>
 

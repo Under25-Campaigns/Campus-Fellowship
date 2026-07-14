@@ -145,9 +145,23 @@ src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg">
             </div>
         `;
 
-        card.onclick = () => {
-            card.classList.toggle("open");
-        };
+       card.onclick=()=>{
+
+document
+.querySelectorAll(".card.open")
+.forEach(c=>{
+
+if(c!==card){
+
+c.classList.remove("open");
+
+}
+
+});
+
+card.classList.toggle("open");
+
+};
 
         container.appendChild(card);
 

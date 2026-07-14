@@ -262,3 +262,23 @@ margin-top:10px;
     }
 
 }
+
+.contact-row{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+}
+
+.whatsapp-btn{
+
+margin-left:auto;
+
+background:none;
+
+padding:0;
+
+font-size:22px;
+
+}

@@ -238,6 +238,40 @@ function formatPortfolio(value) {
 
 }
 
+function getFilteredApplications() {
+
+    const query = document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (query === "") {
+        return applications;
+    }
+
+    return applications.filter(app => {
+
+        const searchable = [
+            app.fullName,
+            app.contactNumber,
+            app.course,
+            app.preference1,
+            app.preference2
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .replace(/[^\p{L}\p{N}\s]/gu, "")
+        .toLowerCase();
+
+        return searchable.includes(
+            query.replace(/[^\p{L}\p{N}\s]/gu, "")
+        );
+
+    });
+
+}
+
 document.getElementById("logoutBtn").addEventListener("click", async () => {
 
     const token = localStorage.getItem("token");
@@ -256,3 +290,91 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     window.location.href = "index.html";
 
 });
+
+document.getElementById("downloadCSV").addEventListener("click", downloadCSV);
+
+function downloadCSV() {
+
+    // Export the currently displayed list if you're filtering,
+    // otherwise export all applications.
+    const data =
+        document.getElementById("search").value.trim()
+            ? getFilteredApplications()
+            : applications;
+
+    if (!data.length) {
+        alert("No applications to download.");
+        return;
+    }
+const headers = [
+    "Name",
+    "Contact Number",
+    "Course",
+    "Year",
+    "Preference 1",
+    "Preference 2",
+    "Personality",
+    "Club Experience",
+    "Superpower",
+    "Event Idea",
+    "New Student",
+    "Belief",
+    "Joke",
+    "Portfolio"
+];
+
+ const rows = data.map(app => [
+
+    app.fullName,
+    app.contactNumber,
+    app.course,
+    app.year,
+    app.preference1,
+    app.preference2,
+    app.personality,
+    app.clubExperience,
+    app.superpower,
+    app.eventIdea,
+    app.newStudent,
+    app.belief,
+    app.joke,
+    app.portfolio
+
+]);
+
+    const csv = [
+        headers,
+        ...rows
+    ]
+    .map(row =>
+        row.map(value =>
+            `"${String(value ?? "").replace(/"/g,'""')}"`
+        ).join(",")
+    )
+    .join("\n");
+
+    const blob = new Blob(
+        [csv],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+
+    const college =
+    (document.getElementById("college").textContent || "Applications")
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "_");
+
+const today = new Date().toISOString().split("T")[0];
+
+a.download = `${college}_${today}.csv`;
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}

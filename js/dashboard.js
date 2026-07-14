@@ -123,7 +123,7 @@ const isBookmarked = bookmarks.includes(bookmarkId);
     >
         <img
 class="wa-icon"
-src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/whatsapp.svg">
+src="assets/Whatsapp.svg">
     </a>
 </div>
 

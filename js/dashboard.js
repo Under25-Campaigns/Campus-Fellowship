@@ -54,54 +54,47 @@ function searchApplications() {
         .toLowerCase()
         .trim();
 
-    if (query === "") {
-        renderCards(applications);
-        return;
+    let filtered = applications;
+
+    // Filter bookmarked applicants if enabled
+    if (showBookmarksOnly) {
+
+        filtered = filtered.filter(app => {
+
+            const bookmarkId =
+                `${app.fullName}|${app.contactNumber}`;
+
+            return bookmarks.includes(bookmarkId);
+
+        });
+
     }
 
-    const filtered = applications.filter(app => {
-        
+    // Apply search
+    if (query !== "") {
 
- let filtered = applications;
+        filtered = filtered.filter(app => {
 
-if (showBookmarksOnly) {
+            const searchable = [
+                app.fullName,
+                app.contactNumber,
+                app.course,
+                app.preference1,
+                app.preference2
+            ]
+            .filter(Boolean)
+            .join(" ")
+            .replace(/[^\p{L}\p{N}\s]/gu, "")
+            .toLowerCase();
 
-    filtered = filtered.filter(app => {
+            return searchable.includes(
+                query.replace(/[^\p{L}\p{N}\s]/gu, "")
+            );
 
-        const bookmarkId =
-            `${app.fullName}|${app.contactNumber}`;
+        });
 
-        return bookmarks.includes(bookmarkId);
+    }
 
-    });
-
-}
-
-if (query !== "") {
-
-    filtered = filtered.filter(app => {
-
-        const searchable = [
-            app.fullName,
-            app.contactNumber,
-            app.course,
-            app.preference1,
-            app.preference2
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .replace(/[^\p{L}\p{N}\s]/gu, "")
-        .toLowerCase();
-
-        return searchable.includes(
-            query.replace(/[^\p{L}\p{N}\s]/gu, "")
-        );
-
-    });
-
-}
-
-renderCards(filtered);
     renderCards(filtered);
 
 }
@@ -271,29 +264,48 @@ function getFilteredApplications() {
         .toLowerCase()
         .trim();
 
-    if (query === "") {
-        return applications;
+    let filtered = applications;
+
+    // Apply bookmark filter
+    if (showBookmarksOnly) {
+
+        filtered = filtered.filter(app => {
+
+            const bookmarkId =
+                `${app.fullName}|${app.contactNumber}`;
+
+            return bookmarks.includes(bookmarkId);
+
+        });
+
     }
 
-    return applications.filter(app => {
+    // Apply search filter
+    if (query !== "") {
 
-        const searchable = [
-            app.fullName,
-            app.contactNumber,
-            app.course,
-            app.preference1,
-            app.preference2
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .replace(/[^\p{L}\p{N}\s]/gu, "")
-        .toLowerCase();
+        filtered = filtered.filter(app => {
 
-        return searchable.includes(
-            query.replace(/[^\p{L}\p{N}\s]/gu, "")
-        );
+            const searchable = [
+                app.fullName,
+                app.contactNumber,
+                app.course,
+                app.preference1,
+                app.preference2
+            ]
+            .filter(Boolean)
+            .join(" ")
+            .replace(/[^\p{L}\p{N}\s]/gu, "")
+            .toLowerCase();
 
-    });
+            return searchable.includes(
+                query.replace(/[^\p{L}\p{N}\s]/gu, "")
+            );
+
+        });
+
+    }
+
+    return filtered;
 
 }
 

@@ -4,6 +4,7 @@ localStorage.getItem("bookmarks")
 ||"[]"
 );
 let applications = [];
+let showBookmarksOnly = false;
 
 window.onload = async () => {
 
@@ -59,24 +60,48 @@ function searchApplications() {
     }
 
     const filtered = applications.filter(app => {
+        
 
-    const searchable = [
-        app.fullName,
-        app.contactNumber,
-        app.course,
-        app.preference1,
-        app.preference2
-    ]
-    .filter(Boolean)
-    .join(" ")
-    .replace(/[^\p{L}\p{N}\s]/gu, "")
-    .toLowerCase();
+ let filtered = applications;
 
-    return searchable.includes(
-        query.replace(/[^\p{L}\p{N}\s]/gu, "")
-    );
+if (showBookmarksOnly) {
 
-});
+    filtered = filtered.filter(app => {
+
+        const bookmarkId =
+            `${app.fullName}|${app.contactNumber}`;
+
+        return bookmarks.includes(bookmarkId);
+
+    });
+
+}
+
+if (query !== "") {
+
+    filtered = filtered.filter(app => {
+
+        const searchable = [
+            app.fullName,
+            app.contactNumber,
+            app.course,
+            app.preference1,
+            app.preference2
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .replace(/[^\p{L}\p{N}\s]/gu, "")
+        .toLowerCase();
+
+        return searchable.includes(
+            query.replace(/[^\p{L}\p{N}\s]/gu, "")
+        );
+
+    });
+
+}
+
+renderCards(filtered);
     renderCards(filtered);
 
 }
@@ -294,9 +319,6 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 document.getElementById("downloadCSV").addEventListener("click", downloadCSV);
 
 function downloadCSV() {
-
-    // Export the currently displayed list if you're filtering,
-    // otherwise export all applications.
     const data =
         document.getElementById("search").value.trim()
             ? getFilteredApplications()
@@ -376,5 +398,19 @@ a.download = `${college}_${today}.csv`;
     a.click();
 
     URL.revokeObjectURL(url);
+}
 
+document
+    .getElementById("bookmarkFilter")
+    .addEventListener("click", toggleBookmarks);
+
+function toggleBookmarks() {
+    showBookmarksOnly = !showBookmarksOnly;
+    const btn = document.getElementById("bookmarkFilter");
+    if (showBookmarksOnly) {
+        btn.textContent = "⭐ Bookmarks";
+    } else {
+        btn.textContent = "☆ Bookmarks";
+    }
+    searchApplications();
 }

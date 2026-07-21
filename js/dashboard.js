@@ -271,10 +271,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 document.getElementById("downloadCSV").addEventListener("click", downloadCSV);
 
 function downloadCSV() {
-    const data =
-        document.getElementById("search").value.trim()
-            ? getFilteredApplications()
-            : applications;
+  const data = getFilteredApplications();
 
     if (!data.length) {
         alert("No applications to download.");

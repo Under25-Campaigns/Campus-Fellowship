@@ -46,56 +46,9 @@ document.getElementById("app").style.display="block";
     document.getElementById("search").addEventListener("input", searchApplications);
 
 };
+
 function searchApplications() {
-
-    const query = document
-        .getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
-
-    let filtered = applications;
-
-    // Filter bookmarked applicants if enabled
-    if (showBookmarksOnly) {
-
-        filtered = filtered.filter(app => {
-
-            const bookmarkId =
-                `${app.fullName}|${app.contactNumber}`;
-
-            return bookmarks.includes(bookmarkId);
-
-        });
-
-    }
-
-    // Apply search
-    if (query !== "") {
-
-        filtered = filtered.filter(app => {
-
-            const searchable = [
-                app.fullName,
-                app.contactNumber,
-                app.course,
-                app.preference1,
-                app.preference2
-            ]
-            .filter(Boolean)
-            .join(" ")
-            .replace(/[^\p{L}\p{N}\s]/gu, "")
-            .toLowerCase();
-
-            return searchable.includes(
-                query.replace(/[^\p{L}\p{N}\s]/gu, "")
-            );
-
-        });
-
-    }
-
-    renderCards(filtered);
+    renderCards(getFilteredApplications());
 
 }
 
@@ -263,28 +216,21 @@ function getFilteredApplications() {
         .value
         .toLowerCase()
         .trim();
-
-    let filtered = applications;
-
-    // Apply bookmark filter
+    let filtered = [...applications];
+    
+    // ⭐ Bookmark filter
     if (showBookmarksOnly) {
-
         filtered = filtered.filter(app => {
-
             const bookmarkId =
                 `${app.fullName}|${app.contactNumber}`;
-
             return bookmarks.includes(bookmarkId);
-
         });
-
     }
 
-    // Apply search filter
+    // 🔍 Search filter
     if (query !== "") {
-
+        const cleanQuery = query.replace(/[^\p{L}\p{N}\s]/gu, "");
         filtered = filtered.filter(app => {
-
             const searchable = [
                 app.fullName,
                 app.contactNumber,
@@ -296,17 +242,11 @@ function getFilteredApplications() {
             .join(" ")
             .replace(/[^\p{L}\p{N}\s]/gu, "")
             .toLowerCase();
-
-            return searchable.includes(
-                query.replace(/[^\p{L}\p{N}\s]/gu, "")
-            );
-
+            return searchable.includes(cleanQuery);
         });
-
     }
 
     return filtered;
-
 }
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
